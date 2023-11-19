@@ -16,7 +16,6 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<UserBean> getUserDetails(String email) {
-        
         return userRepo.getUserDetails(email);
 
     }

@@ -2,7 +2,6 @@ package com.stocktradingplatform.backend.bean;
 
 public class LoginCredentials {
     private String email;
-
     private String password;
 
     public String getEmail() {
@@ -21,5 +20,4 @@ public class LoginCredentials {
         this.password = password;
     }
 
-    
 }

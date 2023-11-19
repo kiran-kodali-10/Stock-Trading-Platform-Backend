@@ -3,15 +3,10 @@ package com.stocktradingplatform.backend.bean;
 import java.math.BigDecimal;
 
 public class UserBean {
-
     private String email;
-
     private String firstName;
-
     private String lastName;
-
     private String userName;
-
     private BigDecimal balance;
 
     public String getEmail() {
@@ -54,6 +49,4 @@ public class UserBean {
         this.balance = balance;
     }
 
-    
-    
 }

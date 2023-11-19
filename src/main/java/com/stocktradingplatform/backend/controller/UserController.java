@@ -5,18 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.stocktradingplatform.backend.bean.LoginCredentials;
 import com.stocktradingplatform.backend.bean.UserBean;
 import com.stocktradingplatform.backend.service.UserService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
@@ -40,7 +36,7 @@ public class UserController {
 
         List<UserBean> userBeanList = userService.getUserDetails(email);
         System.out.println(userBeanList.get(0).getEmail());
-        if (userBeanList !=null && userBeanList.get(0).getEmail().equals(email)) {
+        if (userBeanList.get(0).getEmail().equals(email)) {
             return new ResponseEntity<>(userBeanList, HttpStatus.OK);
         }
 

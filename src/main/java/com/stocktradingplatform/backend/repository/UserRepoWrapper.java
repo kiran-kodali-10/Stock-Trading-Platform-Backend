@@ -12,8 +12,11 @@ import com.stocktradingplatform.backend.entity.UserEntity;
 @Repository
 public class UserRepoWrapper {
 
-    @Autowired
-    private UserRepo userRepo;
+    private final UserRepo userRepo;
+
+    public UserRepoWrapper(UserRepo userRepo) {
+        this.userRepo = userRepo;
+    }
 
     public List<UserBean> getUserDetails(String email){
 
@@ -22,7 +25,7 @@ public class UserRepoWrapper {
 
         try {
             userEntities = userRepo.findByEmail(email);
-            if(userEntities.size()==0)
+            if(userEntities.isEmpty())
                 throw new Exception("Email Id not found");
             userEntities.forEach(userEntity->{
                 UserBean userBean = new UserBean();
