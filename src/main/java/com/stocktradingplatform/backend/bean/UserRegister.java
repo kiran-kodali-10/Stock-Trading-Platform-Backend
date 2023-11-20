@@ -1,22 +1,13 @@
 package com.stocktradingplatform.backend.bean;
 
-import java.math.BigDecimal;
-
-public class UserBean {
-    private Integer id;
+public class UserRegister {
     private String email;
     private String firstName;
     private String lastName;
     private String userName;
-    private BigDecimal balance;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    private String phone;
+    private String SSN;
+    private String password;
 
     public String getEmail() {
         return email;
@@ -50,12 +41,27 @@ public class UserBean {
         this.userName = userName;
     }
 
-    public BigDecimal getBalance() {
-        return balance;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
+    public String getSSN() {
+        return SSN;
+    }
+
+    public void setSSN(String SSN) {
+        this.SSN = SSN;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
