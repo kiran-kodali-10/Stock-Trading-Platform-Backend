@@ -57,10 +57,8 @@ public class UserController {
             userBeanList = userService.loginUser(loginCredentials);
             if (!userBeanList.isEmpty()) {
                 System.out.println(userBeanList);
-
-//                if (userBeanList.get(0).getEmail().equals()) {
-//                    return new ResponseEntity<>(userBeanList, HttpStatus.OK);
-//                }
+            } else {
+                return new ResponseEntity<>(userBeanList, HttpStatus.UNAUTHORIZED);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
