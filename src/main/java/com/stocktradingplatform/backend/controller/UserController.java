@@ -29,6 +29,11 @@ public class UserController {
         return new ResponseEntity<>(userService.getUserDetails(email), HttpStatus.OK);
     }
 
+    public ResponseEntity<List<UserBean>> getUserById(Long id) {
+        System.out.println(id);
+        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
+    }
+
     @PostMapping(value = "/login", consumes = "application/json")
     public ResponseEntity<List<UserBean>> login(@RequestBody LoginCredentials loginCredentials) {
         String email = loginCredentials.getEmail();
