@@ -8,10 +8,8 @@ import java.util.List;
 
 @Repository
 public interface UserRepo extends JpaRepository<UserEntity, Integer> {
-
-    // @Query("SELECT U FROM STOCK_TRADING.USERS U WHERE U.EMAIL = :email")
-    // List<UserEntity> findUserByEmail(@Param("email") String email);
-
     List<UserEntity> findByEmail(String email);
+    List<UserEntity> findByUid(Integer id);
+    List<UserEntity> findByEmailAndPasswordHash(String email, String passwordHash);
 
 }

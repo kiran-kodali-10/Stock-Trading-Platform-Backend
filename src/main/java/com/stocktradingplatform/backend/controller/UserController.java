@@ -1,22 +1,21 @@
 package com.stocktradingplatform.backend.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.stocktradingplatform.backend.bean.UserRegister;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.stocktradingplatform.backend.bean.LoginCredentials;
 import com.stocktradingplatform.backend.bean.UserBean;
 import com.stocktradingplatform.backend.service.UserService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
@@ -33,17 +32,39 @@ public class UserController {
         return new ResponseEntity<>(userService.getUserDetails(email), HttpStatus.OK);
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<UserBean>> getAllUsers() {
+        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<List<UserBean>> getUserById(@PathVariable Integer id) {
+        System.out.println(id);
+        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/register", consumes="application/json")
+    public ResponseEntity<List<UserRegister>> register(@RequestBody UserRegister userRegistration) {
+        System.out.println(userRegistration.getEmail() + " : " + userRegistration.getPassword());
+        userService.createUser(userRegistration);
+        return new ResponseEntity<>(HttpStatusCode.valueOf(201));
+    }
+
     @PostMapping(value = "/login", consumes = "application/json")
     public ResponseEntity<List<UserBean>> login(@RequestBody LoginCredentials loginCredentials) {
-        String email = loginCredentials.getEmail();
-        String password = loginCredentials.getPassword();
+        List<UserBean> userBeanList = new ArrayList<>();
+        try {
+            userBeanList = userService.loginUser(loginCredentials);
+            if (!userBeanList.isEmpty()) {
+                System.out.println(userBeanList);
 
-        List<UserBean> userBeanList = userService.getUserDetails(email);
-        System.out.println(userBeanList.get(0).getEmail());
-        if (userBeanList !=null && userBeanList.get(0).getEmail().equals(email)) {
-            return new ResponseEntity<>(userBeanList, HttpStatus.OK);
+//                if (userBeanList.get(0).getEmail().equals()) {
+//                    return new ResponseEntity<>(userBeanList, HttpStatus.OK);
+//                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-
-            return new ResponseEntity<>(null, HttpStatus.OK);
+        return new ResponseEntity<>(userBeanList, HttpStatus.OK);
     }
 }
