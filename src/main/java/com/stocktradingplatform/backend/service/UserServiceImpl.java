@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.stocktradingplatform.backend.bean.LoginCredentials;
 import com.stocktradingplatform.backend.bean.UserRegister;
-import com.stocktradingplatform.backend.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
