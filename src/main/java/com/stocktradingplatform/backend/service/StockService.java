@@ -2,7 +2,7 @@ package com.stocktradingplatform.backend.service;
 
 import com.stocktradingplatform.backend.bean.StockBean;
 import com.stocktradingplatform.backend.entity.StockEntity;
-import com.stocktradingplatform.backend.entity.StockTransaction;
+import com.stocktradingplatform.backend.entity.StockTransactionEntity;
 import com.stocktradingplatform.backend.entity.UserEntity;
 import org.springframework.stereotype.Service;
 
