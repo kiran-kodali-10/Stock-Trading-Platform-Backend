@@ -2,14 +2,11 @@ package com.stocktradingplatform.backend.controller;
 
 import java.util.List;
 
+import com.stocktradingplatform.backend.bean.WalletTransactionRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.stocktradingplatform.backend.bean.WalletTransactionBean;
 import com.stocktradingplatform.backend.service.WalletServiceImpl;
@@ -23,13 +20,11 @@ public class WalletTransactionController {
 
     @GetMapping("/walletTransactions")
     public ResponseEntity<List<WalletTransactionBean>> getWalletTransactions(@RequestParam Integer id) {
-
         return new ResponseEntity<>(walletService.getAllWalletTransactions(id), HttpStatus.OK);
     }
 
     @PostMapping("/addMoney")
-    public ResponseEntity<String> addMoneyToWallet(Float balance){
-
-        return null;
+    public ResponseEntity<WalletTransactionBean> addMoneyToWallet(@RequestBody WalletTransactionRequest transactionRequest){
+        return new ResponseEntity<>(walletService.addMoneyToWallet(transactionRequest), HttpStatus.OK);
     }
 }

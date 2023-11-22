@@ -3,24 +3,28 @@ package com.stocktradingplatform.backend.bean;
 import java.math.BigDecimal;
 
 public class WalletTransactionBean {
-    private Long wid;
-    private Long uid;
+    private Integer wid;
+    private Integer uid;
     private BigDecimal previousBalance;
     private BigDecimal amount;
     private String status;
     private String method;
     private BigDecimal taxes;
     private BigDecimal fees;
-    public Long getWid() {
+
+    public Integer getWid() {
         return wid;
     }
-    public void setWid(Long wid) {
+
+    public void setWid(Integer wid) {
         this.wid = wid;
     }
-    public Long getUid() {
+
+    public int getUid() {
         return uid;
     }
-    public void setUid(Long uid) {
+
+    public void setUid(int uid) {
         this.uid = uid;
     }
     public BigDecimal getPreviousBalance() {

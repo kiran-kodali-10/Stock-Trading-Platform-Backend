@@ -1,5 +1,6 @@
 package com.stocktradingplatform.backend.service;
 
+import java.math.BigDecimal;
 import java.util.Base64;
 import java.util.List;
 
@@ -44,6 +45,11 @@ public class UserServiceImpl implements UserService{
         System.out.println(email + " : " + password);
 
         return userRepo.getUserByEmailAndPassword(email, encodeToBase64(encodeToBase64(password)));
+    }
+
+    @Override
+    public void updateUserBalance(Integer id, BigDecimal balance, String status) {
+        userRepo.updateUserBalance(id, balance, status);
     }
 
     public static String encodeToBase64(String originalString) {

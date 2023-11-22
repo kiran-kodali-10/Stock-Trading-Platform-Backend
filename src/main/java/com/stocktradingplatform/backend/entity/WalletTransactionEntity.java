@@ -9,11 +9,10 @@ public class WalletTransactionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "WID")
-    private Long id;
+    private Integer wid;
 
-    @ManyToOne
-    @JoinColumn(name = "UID", nullable = false)
-    private UserEntity user;
+    @Column(name = "UID", nullable = false)
+    private Integer uid;
 
     @Column(name = "PREVIOUS_BALANCE")
     private BigDecimal previousBalance;
@@ -34,21 +33,20 @@ public class WalletTransactionEntity {
     private BigDecimal fees;
 
     // Getters and setters
-
-    public Long getId() {
-        return id;
+    public Integer getId() {
+        return wid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Integer wid) {
+        this.wid = wid;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public Integer getUid() {
+        return uid;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
+    public void setUid(Integer uid) {
+        this.uid = uid;
     }
 
     public BigDecimal getPreviousBalance() {

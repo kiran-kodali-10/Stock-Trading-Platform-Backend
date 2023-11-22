@@ -1,5 +1,6 @@
 package com.stocktradingplatform.backend.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.stocktradingplatform.backend.bean.LoginCredentials;
@@ -17,4 +18,5 @@ public interface UserService {
 
     List<UserBean> loginUser(LoginCredentials loginCredentials);
 
+    void updateUserBalance(Integer id, BigDecimal balance, String status);
 }

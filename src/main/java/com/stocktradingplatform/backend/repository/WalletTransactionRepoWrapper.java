@@ -1,14 +1,17 @@
 package com.stocktradingplatform.backend.repository;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.stocktradingplatform.backend.bean.UserBean;
+import com.stocktradingplatform.backend.bean.WalletTransactionRequest;
+import com.stocktradingplatform.backend.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.stocktradingplatform.backend.bean.WalletTransactionBean;
-import com.stocktradingplatform.backend.entity.UserEntity;
 import com.stocktradingplatform.backend.entity.WalletTransactionEntity;
 
 @Repository
@@ -18,45 +21,69 @@ public class WalletTransactionRepoWrapper {
     WalletTransactionRepo walletTransactionRepo;
 
     @Autowired
-    UserRepo userRepo;
+    UserService userService;
     
     public List<WalletTransactionBean> getAllTransactionForUser(Integer id){
-        List<WalletTransactionEntity> walletTransactionEntities = new ArrayList<>();
+        List<WalletTransactionEntity> walletTransactionEntities;
         List<WalletTransactionBean> walletTransactionBeans = new ArrayList<>();
         System.out.println("inside wallet transaction repo wrapper");
         try {
-            List<UserEntity> userEntity = userRepo.findByUid(id);
-            System.out.println(userEntity.get(0).getEmail());
-            walletTransactionEntities = walletTransactionRepo.findByUser(userEntity.get(0));
-            walletTransactionEntities.forEach(walletTransactionEntity ->{
-                WalletTransactionBean walletTransactionBean = new WalletTransactionBean();
-                BeanUtils.copyProperties(walletTransactionEntity, walletTransactionBean);
-                walletTransactionBeans.add(walletTransactionBean);
-            });
-            return walletTransactionBeans;
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
+            UserBean userBean = getUser(id);
+            System.out.println(userBean.getEmail());
 
-        return null;
+            walletTransactionEntities = walletTransactionRepo.findByUid(userBean.getId());
+
+            if (!walletTransactionEntities.isEmpty()) {
+                walletTransactionEntities.forEach(walletTransactionEntity -> {
+                    WalletTransactionBean walletTransactionBean = new WalletTransactionBean();
+                    walletTransactionBean.setWid(walletTransactionEntity.getId());
+                    BeanUtils.copyProperties(walletTransactionEntity, walletTransactionBean);
+                    walletTransactionBeans.add(walletTransactionBean);
+                });
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return walletTransactionBeans;
     }
 
-    public List<WalletTransactionBean> addMoneyToWallet(Float balance){
-
-        List<WalletTransactionBean> listTransactionBeans = new ArrayList<>();
-        List<WalletTransactionEntity> listTransactionEntity = new ArrayList<>();
-
+    public WalletTransactionBean addMoneyToWallet(WalletTransactionRequest walletTransactionRequest){
         WalletTransactionEntity transactionEntity = new WalletTransactionEntity();
-
-        listTransactionBeans = getAllTransactionForUser(null);
-
+        WalletTransactionBean walletTransactionBean = new WalletTransactionBean();
         try {
-            transactionEntity.setAmount(null);
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
+            UserBean userBean = getUser(walletTransactionRequest.getUserId());
+            System.out.println(userBean.getEmail() + " : " + userBean.getId());
 
-        return null;
+            transactionEntity.setUid(userBean.getId());
+            transactionEntity.setAmount(walletTransactionRequest.getAmount());
+            transactionEntity.setFees(walletTransactionRequest.getFees());
+            transactionEntity.setMethod(walletTransactionRequest.getMethod());
+            transactionEntity.setPreviousBalance(userBean.getBalance());
+            transactionEntity.setStatus(walletTransactionRequest.getStatus());
+            transactionEntity.setTaxes(walletTransactionRequest.getTaxes());
+
+            BigDecimal balance = userBean.getBalance();
+            BigDecimal newBalance = balance.add(walletTransactionRequest.getAmount());
+
+            WalletTransactionEntity saveTransaction = walletTransactionRepo.save(transactionEntity);
+            BeanUtils.copyProperties(saveTransaction, walletTransactionBean);
+
+            userService.updateUserBalance(transactionEntity.getUid(), newBalance, walletTransactionRequest.getStatus());
+
+            walletTransactionBean.setWid(saveTransaction.getId());
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return walletTransactionBean;
+    }
+
+    public UserBean getUser(Integer id) {
+        List<UserBean> userBeans = userService.getUserById(id);
+        if(userBeans.isEmpty()) {
+            throw new RuntimeException("User Not found..");
+        }
+        return userBeans.get(0);
     }
 
 }

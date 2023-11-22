@@ -3,9 +3,11 @@ package com.stocktradingplatform.backend.repository;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.stocktradingplatform.backend.bean.LoginCredentials;
 import com.stocktradingplatform.backend.bean.UserRegister;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
@@ -82,6 +84,21 @@ public class UserRepoWrapper {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    public void updateUserBalance(Integer id, BigDecimal balance, String status) {
+        List<UserEntity> userEntities = userRepo.findByUid(id);
+
+        if (!userEntities.isEmpty()) {
+            if (status.equals("LOAD") || status.equals("SELL")) {
+                userEntities.get(0).setBalance(balance);
+                userRepo.save(userEntities.get(0));
+            } else if (status.equals("BUY") || status.equals("WITHDRAW")) {
+                BigDecimal absoluteValue = balance.abs();
+                userEntities.get(0).setBalance(absoluteValue);
+                userRepo.save(userEntities.get(0));
+            }
+        }
     }
 
     public List<UserBean> getUserByEmailAndPassword(String email, String password) {
