@@ -1,5 +1,6 @@
 package com.stocktradingplatform.backend.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,5 +65,10 @@ public class UserController {
             System.out.println(e.getMessage());
         }
         return new ResponseEntity<>(userBeanList, HttpStatus.OK);
+    }
+
+    @GetMapping("/getBalance/{id}")
+    public ResponseEntity<BigDecimal> getBalance(@PathVariable Integer id){
+        return new ResponseEntity<>(userService.getBalance(id), HttpStatus.OK);
     }
 }

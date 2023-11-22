@@ -19,4 +19,7 @@ public interface UserService {
     List<UserBean> loginUser(LoginCredentials loginCredentials);
 
     void updateUserBalance(Integer id, BigDecimal balance, String status);
+
+    BigDecimal getBalance(Integer id);
+    
 }
