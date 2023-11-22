@@ -40,4 +40,23 @@ public class WalletTransactionRepoWrapper {
 
         return null;
     }
+
+    public List<WalletTransactionBean> addMoneyToWallet(Float balance){
+
+        List<WalletTransactionBean> listTransactionBeans = new ArrayList<>();
+        List<WalletTransactionEntity> listTransactionEntity = new ArrayList<>();
+
+        WalletTransactionEntity transactionEntity = new WalletTransactionEntity();
+
+        listTransactionBeans = getAllTransactionForUser(null);
+
+        try {
+            transactionEntity.setAmount(null);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        return null;
+    }
+
 }
