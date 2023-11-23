@@ -1,5 +1,6 @@
 package com.stocktradingplatform.backend.bean;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 public class StockTransactionBean {
@@ -10,6 +11,8 @@ public class StockTransactionBean {
     private String status;
     private String mode;
     private Timestamp timestamp;
+
+    private BigDecimal quantity;
 
     public Long getTid() {
         return tid;
@@ -65,6 +68,14 @@ public class StockTransactionBean {
 
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public BigDecimal getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(BigDecimal quantity) {
+        this.quantity = quantity;
     }
 
 }

@@ -1,6 +1,8 @@
 package com.stocktradingplatform.backend.entity;
 
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Entity
@@ -30,6 +32,9 @@ public class StockTransactionEntity {
 
     @Column(name = "TIMESTAMP")
     private Timestamp timestamp;
+
+    @Column(name="QUANTITY")
+    private BigDecimal quantity;
 
     // Getters and setters
 
