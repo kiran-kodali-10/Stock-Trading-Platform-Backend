@@ -11,15 +11,13 @@ public class StockTransactionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TID")
-    private Long id;
+    private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "UID", nullable = false)
-    private UserEntity user;
+    @Column(name = "UID", nullable = false)
+    private Integer uid;
 
-    @ManyToOne
-    @JoinColumn(name = "SYMBOL", nullable = false)
-    private StockEntity stock;
+    @Column(name = "SYMBOL", nullable = false)
+    private String symbol;
 
     @Column(name = "BUY_SELL", nullable = false)
     private String buySell;
@@ -38,28 +36,28 @@ public class StockTransactionEntity {
 
     // Getters and setters
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public Integer getUid() {
+        return uid;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
+    public void setUid(Integer uid) {
+        this.uid = uid;
     }
 
-    public StockEntity getStock() {
-        return stock;
+    public String getSymbol() {
+        return symbol;
     }
 
-    public void setStock(StockEntity stock) {
-        this.stock = stock;
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public String getBuySell() {
@@ -92,5 +90,13 @@ public class StockTransactionEntity {
 
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public BigDecimal getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(BigDecimal quantity) {
+        this.quantity = quantity;
     }
 }

@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 public class StockTransactionBean {
-    private Long tid;
-    private Long uid;
+    private Integer tid;
+    private Integer uid;
     private String symbol;
     private String buySell;
     private String status;
@@ -14,19 +14,19 @@ public class StockTransactionBean {
 
     private BigDecimal quantity;
 
-    public Long getTid() {
+    public Integer getTid() {
         return tid;
     }
 
-    public void setTid(Long tid) {
+    public void setTid(Integer tid) {
         this.tid = tid;
     }
 
-    public Long getUid() {
+    public Integer getUid() {
         return uid;
     }
 
-    public void setUid(Long uid) {
+    public void setUid(Integer uid) {
         this.uid = uid;
     }
 
